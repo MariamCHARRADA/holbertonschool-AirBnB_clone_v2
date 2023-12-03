@@ -5,6 +5,7 @@ from sqlalchemy import Column, String, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from os import getenv
 from models.review import Review
+from models.amenity import Amenity
 import models
 
 
@@ -23,8 +24,14 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
 
+    __tablename__ = "place_amenity"
+    metadata = Base.metadata
+    place_id = Column(String(60), ForeignKey("places.id"), nullable=False)
+    amenity_id = Column(String(60), ForeignKey("amenities.id"), nullable=False)
+
     if getenv("HBNB_TYPE_STORAGE") == "db":
         reviews = relationship("Review", backref="place", cascade="delete")
+        amenities = relationship("Amenity", secondary="place_amenity", viewonly=False)
     else:
 
         @property
@@ -35,3 +42,13 @@ class Place(BaseModel, Base):
                 if value.place_id == self.id:
                     list_of_reviews.append(value)
             return list_of_reviews
+
+        @property
+        def amenities(self):
+            """Return the list of Amenity instances based on the list of
+            amenity_ids"""
+            list_of_amenities = []
+            for key, value in models.storage.all(Amenity).items():
+                if value.id in self.amenity_ids:
+                    list_of_amenities.append(value)
+            return list_of_amenities
