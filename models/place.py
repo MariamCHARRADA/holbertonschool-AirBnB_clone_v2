@@ -13,7 +13,7 @@ class Place(BaseModel, Base):
     """A place to stay"""
 
     __tablename__ = "places"
-    city_id = Comumn(String(60), ForeignKey("cities.id"), nullable=False)
+    city_id = Column(String(60), ForeignKey("cities.id"), nullable=False)
     user_id = Column(String(60), ForeignKey("users.id"), nullable=False)
     name = Column(String(128), nullable=False)
     description = Column(String(1024), nullable=True)
@@ -24,11 +24,12 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
 
-    __tablename__ = "place_amenity"
-    metadata = Base.metadata
-    place_id = Column(String(60), ForeignKey("places.id"), nullable=False)
-    amenity_id = Column(String(60), ForeignKey("amenities.id"), nullable=False)
-
+    place_amenity = Table(
+        "place_amenity",
+        Base.metadata,
+        Column("place_id", String(60), ForeignKey("places.id"), nullable=False),
+        Column("amenity_id", String(60), ForeignKey("amenities.id"), nullable=False),
+    )
     if getenv("HBNB_TYPE_STORAGE") == "db":
         reviews = relationship("Review", backref="place", cascade="delete")
         amenities = relationship("Amenity", secondary="place_amenity", viewonly=False)
