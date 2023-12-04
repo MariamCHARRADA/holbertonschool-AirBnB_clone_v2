@@ -39,6 +39,8 @@ class DBStorage:
             "mysql+mysqldb://HBNB_MYSQL_USER:HBNB_MYSQL_PWD@localhost/HBNB_MYSQL_DB",
             pool_pre_ping=True,
         )
+        self.reload()
+        
         if getenv("HBNB_ENV") == "test":
             Base.metadata.drop_all(self.__engine)
 
