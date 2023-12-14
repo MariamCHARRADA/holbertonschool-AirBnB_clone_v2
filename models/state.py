@@ -17,7 +17,7 @@ class State(BaseModel, Base):
         name = Column(String(128), nullable=False)
     else:
         name = ""
-        
+
         @property
         def cities(self):
             """returns the list of City instances with state_id"""
