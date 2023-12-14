@@ -35,8 +35,12 @@ class DBStorage:
 
     def __init__(self):
         """Instantiate a DBStorage object"""
+        user = getenv("HBNB_MYSQL_USER")
+        password = getenv("HBNB_MYSQL_PWD")
+        host = getenv("HBNB_MYSQL_HOST")
+        db = getenv("HBNB_MYSQL_DB")
         self.__engine = create_engine(
-            "mysql+mysqldb://HBNB_MYSQL_USER:HBNB_MYSQL_PWD@localhost/HBNB_MYSQL_DB",
+            "mysql+mysqldb://{}:{}@{}/{}".format(user, password, host, db),
             pool_pre_ping=True,
         )
         self.reload()
