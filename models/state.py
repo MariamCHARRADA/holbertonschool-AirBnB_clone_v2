@@ -19,7 +19,7 @@ class State(BaseModel, Base):
 
         @property
         def cities(self):
-            """cities getter: returns the list of City instances with state_id"""
+            """returns the list of City instances with state_id"""
             from models import storage
             from models.city import City
 
