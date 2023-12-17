@@ -12,10 +12,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 from os import getenv
-from sqlalchemy import Column
 from sqlalchemy import create_engine
-from sqlalchemy import Integer
-from sqlalchemy import String
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 
