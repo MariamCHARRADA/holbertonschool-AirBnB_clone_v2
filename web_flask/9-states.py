@@ -13,11 +13,16 @@ def states_list():
     states = storage.all(State).values()
     return render_template("9-states.html", states=states)
 
+
 @app.route("/states/<id>", strict_slashes=False)
 def state(id):
     """returns a list of all states in the database"""
     states = storage.all(State).values()
+    for state in states:
+        if state.id == id:
+            return render_template("9-states.html", state=state, mode="id")
     return render_template("9-states.html", states=states)
+
 
 @app.teardown_appcontext
 def teardown(exception):
