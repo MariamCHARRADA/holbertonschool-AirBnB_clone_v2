@@ -17,13 +17,7 @@ from models.user import User
 
 
 class DBStorage:
-    """
-    Storage engine using SQLAlchemy to interact with a MySQL database.
-
-    Attributes:
-    __engine (sqlalchemy.Engine): The SQLAlchemy engine.
-    __session (sqlalchemy.Session): The SQLAlchemy session.
-    """
+    """DBStorage class for managing the database storage engine"""
 
     __engine = None
     __session = None
@@ -47,16 +41,7 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """
-        Retrieves all objects of a given class from the database.
-
-        Args:
-        cls (class): The class to filter objects by.
-
-        Returns:
-        dict: A dictionary containing all objects,
-        formatted as "{class_name}.{id}".
-        """
+        """returns a dictionary of models currently in storage"""
         if cls is not None:
             if isinstance(cls, str):
                 cls = eval(cls)
@@ -73,12 +58,7 @@ class DBStorage:
         return {"{}.{}".format(type(obj).__name__, obj.id): obj for obj in objects}
 
     def new(self, obj):
-        """
-        Adds a new object to the current database session.
-
-        Args:
-        obj: The object to be added.
-        """
+        """adds the object to the current database session"""
         self.__session.add(obj)
 
     def save(self):
@@ -86,12 +66,7 @@ class DBStorage:
         self.__session.commit()
 
     def delete(self, obj=None):
-        """
-        Deletes an object from the current database session.
-
-        Args:
-        obj: The object to be deleted.
-        """
+        """deletes from the current database session obj if not None"""
         if obj:
             self.__session.delete(obj)
 
