@@ -12,7 +12,7 @@ def states_list():
     from models import storage
     from models.state import State
 
-    states = storage.all(State)
+    states = storage.all(State).values()
     return render_template("8-cities_by_states.html", states=states)
 
 
