@@ -10,8 +10,9 @@ app = Flask(__name__)
 def states_list():
     """returns a list of all states in the database"""
     from models import storage
+    from models.state import State
 
-    states = storage.all("State")
+    states = storage.all(State)
     return render_template("8-cities_by_states.html", states=states)
 
 
