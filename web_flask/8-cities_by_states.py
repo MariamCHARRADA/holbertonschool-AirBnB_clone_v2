@@ -6,18 +6,18 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 
-@app.route("/states_list", strict_slashes=False)
+@app.route("/cities_by_states", strict_slashes=False)
 def states_list():
     """returns a list of all states in the database"""
     from models import storage
 
     states = storage.all("State")
-    return render_template("7-states_list.html", states=states)
+    return render_template("8-cities_by_states.html", states=states)
 
 
 @app.teardown_appcontext
-def teardown_db(exception):
-    """Closes the storage on teardown"""
+def teardown(exception):
+    """Remove the current SQLAlchemy session"""
     from models import storage
 
     storage.close()
