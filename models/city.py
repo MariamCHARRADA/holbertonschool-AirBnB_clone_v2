@@ -6,11 +6,12 @@ from os import getenv
 
 
 class City(BaseModel, Base):
-    """ The city class, contains state ID and name """
+    """The city class, contains state ID and name"""
+
     from sqlalchemy import Column, String, ForeignKey
+
     __tablename__ = "cities"
     if getenv("HBNB_TYPE_STORAGE") == "db":
-        id = Column(String(60), primary_key=True, nullable=False)
         name = Column(String(128), nullable=False)
         state_id = Column(String(128), ForeignKey("states.id"), nullable=False)
         places = relationship("Place", backref="cities", cascade="all, delete")

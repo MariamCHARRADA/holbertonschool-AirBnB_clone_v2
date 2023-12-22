@@ -9,7 +9,13 @@ from os import getenv
 
 
 class State(BaseModel, Base):
-    """State class"""
+    """State class for representing geographical states.
+
+    Attributes:
+        __tablename__ (str): The name of the table in the database.
+        name (Column): A column representing the name of the state.
+        cities (relationship): A one-to-many relationship with the City model.
+    """
 
     __tablename__ = "states"
     name = Column(String(128), nullable=False)
