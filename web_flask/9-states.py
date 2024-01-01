@@ -32,6 +32,8 @@ def state(id):
 @app.teardown_appcontext
 def teardown(exception):
     """Remove the current SQLAlchemy session"""
+    from models import storage
+
     storage.close()
 
 
