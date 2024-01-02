@@ -9,7 +9,14 @@ app = Flask(__name__)
 @app.route("/hbnb_filters", strict_slashes=False)
 def hbnb_filters():
     """Displays the main HBnB filters HTML page"""
-    return render_template("10-hbnb_filters.html")
+    from models import storage
+    from models.state import State
+    from models.amenity import Amenity
+
+    states = storage.all(State).values()
+    amenities = storage.all(Amenity).values()
+    return render_template("10-hbnb_filters.html", states=states, amenities=amenities)
+
 
 @app.teardown_appcontext
 def teardown(exception):
